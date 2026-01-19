@@ -26,29 +26,20 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const PROJECTS: Project[] = [
   {
-    id: 1,
-    title: "E-Commerce API .NET",
-    description: "API robusta desarrollada con ASP.NET Core Web API, Entity Framework Core y SQL Server. Implementa JWT y Patrón Repository.",
-    image: "https://picsum.photos/seed/api/600/400",
-    tags: [".NET Core", "SQL Server", "Docker"],
+    id: 0,
+    title: "Sistema de Ventas y Compras",
+    description: "Sistema de ventas y compras realizado en C# con visual studio 2015 y SQL server 2014",
+    image: "https://i.postimg.cc/2jT9YtLH/sistema-ventas.png",
+    tags: ["C#", "SQL Server 2014", "WinForms"],
     githubUrl: "https://github.com/DarioDidier",
     demoUrl: "#"
   },
   {
-    id: 2,
-    title: "Inventory Management System",
-    description: "Aplicación de escritorio con WPF y .NET 8 para la gestión de inventarios en tiempo real con reportes automáticos.",
-    image: "https://picsum.photos/seed/inventory/600/400",
-    tags: ["WPF", "C#", "MVVM"],
-    githubUrl: "https://github.com/DarioDidier",
-    demoUrl: "#"
-  },
-  {
-    id: 3,
-    title: "Real-time Chat App",
-    description: "Plataforma de chat utilizando SignalR para comunicación bidireccional y React para la interfaz de usuario.",
-    image: "https://picsum.photos/seed/chat/600/400",
-    tags: ["SignalR", "React", "Azure"],
+    id: 4,
+    title: "Agenda visual NeuroVisual",
+    description: "agenda visual creada para ayudar a niños con TEA y neurodivergentes, tambien a padres y psicologos",
+    image: "https://i.postimg.cc/B6nDBmZL/agenda-visual.png",
+    tags: ["C#", "WinForms", "Accesibilidad"],
     githubUrl: "https://github.com/DarioDidier",
     demoUrl: "#"
   }
