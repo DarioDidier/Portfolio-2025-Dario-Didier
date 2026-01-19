@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { ExternalLink, Github } from 'lucide-react';
-import { PROJECTS } from '../constants';
+import { PROJECTS } from '../constants.tsx';
 
 const Portfolio: React.FC = () => {
   return (
