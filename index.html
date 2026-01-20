@@ -7,7 +7,7 @@
     <title>Dario Didier | .NET Developer Portfolio</title>
     <!-- Tailwind v4 Browser SDK -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <!-- Babel Standalone para transpilación en el navegador -->
+    <!-- Babel Standalone para procesar JSX y TS en el navegador -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,7 @@
         font-family: 'Inter', sans-serif;
         background-color: #0f172a;
         color: #f8fafc;
+        margin: 0;
       }
       .gradient-text {
         background: linear-gradient(to right, #818cf8, #c084fc);
@@ -31,6 +32,14 @@
       #root {
         min-height: 100vh;
       }
+      /* Animaciones básicas */
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
     </style>
     <script type="importmap">
 {
@@ -39,7 +48,6 @@
     "react-dom": "https://esm.sh/react-dom@19.0.0",
     "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
     "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/"
   }
 }
@@ -47,7 +55,237 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Cargamos todo desde index.tsx para evitar problemas de MIME con imports relativos -->
-    <script type="text/babel" data-type="module" src="./index.tsx"></script>
+
+    <!-- El código se incluye aquí directamente para bypass de restricciones MIME del servidor -->
+    <script type="text/babel" data-type="module">
+      import React, { useState, useEffect } from 'react';
+      import ReactDOM from 'react-dom/client';
+      import { 
+        Github, Linkedin, Instagram, Code2, Database, Layers, Monitor, Globe, Terminal,
+        FileJson, Cpu, Menu, X, Code, ArrowRight, Download, ExternalLink, Mail, Phone, MapPin, Send
+      } from 'lucide-react';
+
+      // --- DATOS ---
+      const NAV_ITEMS = [
+        { label: 'Inicio', href: '#home' },
+        { label: 'Sobre Mí', href: '#about' },
+        { label: 'Habilidades', href: '#skills' },
+        { label: 'Proyectos', href: '#portfolio' },
+        { label: 'Contacto', href: '#contact' },
+      ];
+
+      const PROJECTS = [
+        {
+          id: 0,
+          title: "Sistema de Ventas y Compras",
+          description: "Sistema integral de gestión comercial realizado en C# con Visual Studio y SQL Server. Enfocado en la eficiencia operativa y seguridad de datos.",
+          image: "https://i.postimg.cc/2jT9YtLH/sistema-ventas.png",
+          tags: ["C#", "SQL Server", "WinForms"],
+          githubUrl: "https://github.com/DarioDidier",
+          demoUrl: "#"
+        },
+        {
+          id: 4,
+          title: "Agenda visual NeuroVisual",
+          description: "Aplicación de accesibilidad diseñada para niños con TEA y neurodivergentes, facilitando la organización diaria mediante pictogramas.",
+          image: "https://i.postimg.cc/B6nDBmZL/agenda-visual.png",
+          tags: ["C#", "UX/UI", "Accesibilidad"],
+          githubUrl: "https://github.com/DarioDidier",
+          demoUrl: "#"
+        }
+      ];
+
+      const SKILLS = [
+        { name: 'C#', icon: <Terminal size={32} />, category: 'Backend' },
+        { name: '.NET 8', icon: <Layers size={32} />, category: 'Core' },
+        { name: 'SQL Server', icon: <Database size={32} />, category: 'Database' },
+        { name: 'ASP.NET Core', icon: <Globe size={32} />, category: 'Web' },
+        { name: 'JavaScript', icon: <FileJson size={32} />, category: 'Frontend' },
+        { name: 'Microservicios', icon: <Cpu size={32} />, category: 'Architecture' },
+      ];
+
+      const SOCIAL_LINKS = [
+        { name: 'GitHub', icon: <Github size={24} />, url: 'https://github.com/DarioDidier', color: 'hover:text-white' },
+        { name: 'LinkedIn', icon: <Linkedin size={24} />, url: 'https://www.linkedin.com/in/dariodidier', color: 'hover:text-blue-400' },
+        { name: 'Instagram', icon: <Instagram size={24} />, url: 'https://www.instagram.com/dario_didier', color: 'hover:text-pink-400' },
+      ];
+
+      // --- COMPONENTES ---
+
+      const Navbar = () => {
+        const [isOpen, setIsOpen] = useState(false);
+        const [scrolled, setScrolled] = useState(false);
+
+        useEffect(() => {
+          const handleScroll = () => setScrolled(window.scrollY > 20);
+          window.addEventListener('scroll', handleScroll);
+          return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        return (
+          <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-3 shadow-2xl' : 'bg-transparent py-5'}`}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-indigo-600 p-2 rounded-lg"><Code className="text-white w-6 h-6" /></div>
+                  <span className="text-xl font-bold tracking-tight text-white">Dev <span className="text-indigo-500">.NET</span></span>
+                </div>
+                <div className="hidden md:flex items-center space-x-8">
+                  {NAV_ITEMS.map((item) => (
+                    <a key={item.href} href={item.href} className="text-gray-300 hover:text-white transition-colors font-medium text-sm uppercase tracking-wider">{item.label}</a>
+                  ))}
+                  <a href="#contact" className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-full font-semibold transition-all shadow-lg hover:shadow-indigo-500/25">Hablemos</a>
+                </div>
+                <div className="md:hidden">
+                  <button onClick={() => setIsOpen(!isOpen)} className="text-gray-300 hover:text-white p-2">
+                    {isOpen ? <X size={28} /> : <Menu size={28} />}
+                  </button>
+                </div>
+              </div>
+            </div>
+            {isOpen && (
+              <div className="md:hidden px-4 pt-2 pb-6 space-y-2 glass mt-2 mx-4 rounded-2xl">
+                {NAV_ITEMS.map((item) => (
+                  <a key={item.href} href={item.href} className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-indigo-600/20 rounded-xl transition-all" onClick={() => setIsOpen(false)}>{item.label}</a>
+                ))}
+              </div>
+            )}
+          </nav>
+        );
+      };
+
+      const Hero = () => (
+        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-indigo-600 rounded-full mix-blend-multiply filter blur-[120px] opacity-20 animate-pulse"></div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center animate-fade-in">
+            <div className="inline-block mb-6 px-4 py-1.5 glass rounded-full border border-indigo-500/30">
+              <span className="text-indigo-400 text-sm font-semibold tracking-widest uppercase">Disponible para proyectos</span>
+            </div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-8 tracking-tighter text-white">
+              Hola, soy <span className="gradient-text">Dario Didier</span><br />
+              <span className="text-slate-100">.NET Developer</span>
+            </h1>
+            <p className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl mb-12 leading-relaxed">
+              Construyendo soluciones robustas y escalables con tecnologías Microsoft. Analista Programador enfocado en el impacto real del software.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+              <a href="#portfolio" className="group w-full sm:w-auto flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-xl hover:shadow-indigo-500/40">
+                Ver Proyectos <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a href="https://drive.google.com/file/d/1PrCzE8Znbd73xW04_Ckv6GU3ajT33wbw/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-2xl font-bold transition-all border border-slate-700">
+                Descargar CV <Download className="ml-2 w-5 h-5" />
+              </a>
+            </div>
+            <div className="flex items-center justify-center space-x-8">
+              {SOCIAL_LINKS.map((link) => (
+                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className={`text-gray-400 ${link.color} transform hover:scale-125 transition-all duration-300`}>
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+
+      const About = () => (
+        <section id="about" className="py-24 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                <div className="relative glass p-2 rounded-2xl">
+                  <img src="https://i.postimg.cc/MHmfbDbK/profile.png" alt="Profile" className="rounded-xl grayscale hover:grayscale-0 transition-all duration-700 w-full aspect-square object-cover" />
+                </div>
+              </div>
+              <div>
+                <h2 className="text-indigo-400 font-bold uppercase text-sm mb-4 tracking-widest">Sobre Mí</h2>
+                <h3 className="text-4xl font-extrabold mb-8 text-white">Analista Programador</h3>
+                <p className="text-gray-400 text-lg leading-relaxed mb-6">
+                  Estudiante de desarrollo de software apasionado por resolver problemas complejos mediante código limpio y eficiente. Especializado en el ecosistema <strong>.NET (C#)</strong> con un enfoque integral en arquitecturas modernas.
+                </p>
+                <div className="grid grid-cols-2 gap-8 text-white">
+                  <div><h4 className="font-bold mb-1">Email</h4><p className="text-gray-400 text-sm">dariodidier2014@gmail.com</p></div>
+                  <div><h4 className="font-bold mb-1">Ubicación</h4><p className="text-gray-400 text-sm">Buenos Aires, Argentina</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+
+      const Skills = () => (
+        <section id="skills" className="py-24 bg-slate-900/50 text-center">
+          <div className="max-w-7xl mx-auto px-4">
+            <h3 className="text-4xl font-extrabold mb-16 text-white">Tecnologías Principales</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              {SKILLS.map((skill) => (
+                <div key={skill.name} className="group glass p-6 rounded-3xl hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all">
+                  <div className="mb-4 text-indigo-400 flex justify-center">{skill.icon}</div>
+                  <h4 className="font-bold text-white text-sm">{skill.name}</h4>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+
+      const Portfolio = () => (
+        <section id="portfolio" className="py-24">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex justify-between items-end mb-16">
+              <h3 className="text-4xl font-extrabold text-white">Proyectos</h3>
+              <a href="https://github.com/DarioDidier" target="_blank" className="text-indigo-400 font-bold flex items-center">GitHub <ExternalLink className="ml-2 w-5 h-5" /></a>
+            </div>
+            <div className="grid md:grid-cols-2 gap-8">
+              {PROJECTS.map((project) => (
+                <div key={project.id} className="group glass rounded-3xl overflow-hidden border border-slate-700/50 hover:border-indigo-500/30 transition-all">
+                  <div className="aspect-video overflow-hidden">
+                    <img src={project.image} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <div className="p-8">
+                    <h4 className="text-2xl font-bold text-white mb-4">{project.title}</h4>
+                    <p className="text-gray-400 mb-8">{project.description}</p>
+                    <div className="flex items-center space-x-6">
+                      <a href={project.githubUrl} target="_blank" className="text-gray-400 hover:text-white flex items-center font-medium"><Github size={20} className="mr-2" /> Código</a>
+                      <a href={project.demoUrl} target="_blank" className="text-gray-400 hover:text-white flex items-center font-medium"><ExternalLink size={20} className="mr-2" /> Demo</a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+
+      const Contact = () => (
+        <section id="contact" className="py-24 px-4">
+          <div className="max-w-4xl mx-auto glass rounded-[2.5rem] p-8 md:p-16 shadow-2xl">
+            <h3 className="text-4xl font-extrabold mb-12 text-center text-white">¿Hablamos?</h3>
+            <div className="grid md:grid-cols-3 gap-12 text-center mb-16">
+              <div><Mail className="mx-auto text-indigo-500 mb-4" /><p className="text-white font-bold">Email</p><p className="text-gray-400 text-xs">dariodidier2014@gmail.com</p></div>
+              <div><Phone className="mx-auto text-indigo-500 mb-4" /><p className="text-white font-bold">Teléfono</p><p className="text-gray-400 text-xs">+54 1133728915</p></div>
+              <div><MapPin className="mx-auto text-indigo-500 mb-4" /><p className="text-white font-bold">Ubicación</p><p className="text-gray-400 text-xs">Buenos Aires, Argentina</p></div>
+            </div>
+          </div>
+        </section>
+      );
+
+      const App = () => (
+        <div className="min-h-screen selection:bg-indigo-500/30 selection:text-indigo-200">
+          <Navbar />
+          <Hero />
+          <About />
+          <Skills />
+          <Portfolio />
+          <Contact />
+          <footer className="py-12 border-t border-slate-800/50 text-center text-gray-500 text-sm">
+            &copy; {new Date().getFullYear()} Dario Didier. Portfolio .NET Developer.
+          </footer>
+        </div>
+      );
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
   </body>
 </html>
