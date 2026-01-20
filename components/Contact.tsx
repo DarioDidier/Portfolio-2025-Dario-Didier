@@ -1,8 +1,22 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = useState({ nombre: '', mail: '', mensaje: '' });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form data:', formData);
+    alert('¡Mensaje enviado con éxito!');
+    setFormData({ nombre: '', mail: '', mensaje: '' });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
     <section id="contact" className="py-24 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -50,40 +64,43 @@ const Contact: React.FC = () => {
             
             {/* Contact Form */}
             <div className="p-8 md:p-12">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Tu Nombre</label>
+                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Nombre</label>
                     <input 
                       type="text" 
-                      placeholder="John Doe" 
+                      name="nombre"
+                      value={formData.nombre}
+                      onChange={handleChange}
+                      placeholder="Tu nombre" 
+                      required
                       className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-indigo-500 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Tu Email</label>
+                    <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Mail</label>
                     <input 
                       type="email" 
-                      placeholder="john@example.com" 
+                      name="mail"
+                      value={formData.mail}
+                      onChange={handleChange}
+                      placeholder="tu@email.com" 
+                      required
                       className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-indigo-500 transition-all"
                     />
                   </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Asunto</label>
-                  <input 
-                    type="text" 
-                    placeholder="Quiero hablar sobre un proyecto" 
-                    className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-indigo-500 transition-all"
-                  />
                 </div>
                 
                 <div>
                   <label className="block text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Mensaje</label>
                   <textarea 
+                    name="mensaje"
+                    value={formData.mensaje}
+                    onChange={handleChange}
                     rows={4} 
                     placeholder="Hola Dario, me gustaría..." 
+                    required
                     className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-indigo-500 transition-all resize-none"
                   ></textarea>
                 </div>
