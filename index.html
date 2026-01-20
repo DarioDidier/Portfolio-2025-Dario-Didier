@@ -4,10 +4,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dev Portfolio | .NET Developer</title>
+    <title>Dario Didier | .NET Developer Portfolio</title>
     <!-- Tailwind v4 Browser SDK -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <!-- Babel Standalone para manejar archivos .tsx directamente en el navegador -->
+    <!-- Babel Standalone para transpilación en el navegador -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Se cambia a type="text/babel" para que Babel lo procese y data-type="module" para soportar imports -->
+    <!-- Cargamos todo desde index.tsx para evitar problemas de MIME con imports relativos -->
     <script type="text/babel" data-type="module" src="./index.tsx"></script>
   </body>
 </html>
